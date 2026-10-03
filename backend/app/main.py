@@ -38,4 +38,11 @@ def explain(scenario: str, seed: int, x: int, y: int, lead: int = 1):
     c = {n: round(float(a[y, x]), 2) for n, a in terms[k].items()}
     return dict(base=-7.5, terms=c, p=int(round(100 * fp[k][y, x])))
 
-app.mount("/", StaticFiles(directory=Path(__file__).resolve().parents[2] / "frontend", html=True), name="web")
+project_root = next(
+    (parent for parent in Path(__file__).resolve().parents if (parent / "frontend").is_dir()),
+    None,
+)
+if project_root is None:
+    raise RuntimeError("Could not locate the frontend directory")
+
+app.mount("/", StaticFiles(directory=project_root / "frontend", html=True), name="web")
