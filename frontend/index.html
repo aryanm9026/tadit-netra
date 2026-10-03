@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f3ee">
+<title>TaditNetra — Storm desk</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="TaditNetra storm desk"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-name"><b>TaditNetra</b><small>तड़ित-नेत्र <span>·</span> STORM DESK</small></span></a>
+  <div class="desk-status"><span class="live-dot"></span><span>MONITORING</span><span class="status-divider"></span><span id="desk-time">LIVE DESK</span></div>
+  <form class="run-controls" onsubmit="return false">
+    <label class="control-select"><span>SCENARIO</span><select id="scn" aria-label="Scenario"><option value="squall">Squall line</option><option value="isolated">Isolated cells</option><option value="weak">Weak convection</option></select></label>
+    <label class="seed-control"><span>SEED</span><input id="seed" type="number" value="7" min="0" aria-label="Seed"></label>
+    <button id="run" class="run-button"><span aria-hidden="true">↻</span> Run cycle</button>
+  </form>
+</header>
+<nav id="steps" class="pipeline" aria-label="Analysis stages">
+  <span class="pipeline-label">WORKFLOW</span>
+  <button data-s="observe" class="on"><i>01</i><span>Observe</span></button><span class="step-rule"></span>
+  <button data-s="fuse"><i>02</i><span>Fuse</span></button><span class="step-rule"></span>
+  <button data-s="predict"><i>03</i><span>Forecast</span></button><span class="step-rule"></span>
+  <button data-s="act"><i>04</i><span>Respond</span></button>
+  <span class="pipeline-caption">EASTERN INDIA <b>·</b> CONVECTIVE OUTLOOK</span>
+</nav>
+<main>
+  <section id="stage" aria-label="Storm map">
+    <div class="map-toolbar">
+      <div class="view-switch" role="group" aria-label="Map view"><button data-v="map" class="on" aria-pressed="true">Map</button><button data-v="3d" aria-pressed="false">Volume</button></div>
+      <span class="map-kicker"><span class="live-dot"></span> REFLECTIVITY <span class="map-kicker-muted">/ 5 KM GRID</span></span>
+      <details class="layer-menu" open><summary>Map layers <span>⌄</span></summary><div class="chips">
+        <label><input type="checkbox" id="l-sat">Satellite</label><label><input type="checkbox" id="l-cape">CAPE</label>
+        <label><input type="checkbox" id="l-rad" checked>Radar</label><label><input type="checkbox" id="l-ltg" checked>Strikes</label>
+        <label><input type="checkbox" id="l-prob">Lightning risk</label><label><input type="checkbox" id="l-cells">Cells</label>
+        <label><input type="checkbox" id="l-vil">Villages</label><label><input type="checkbox" id="l-virt">Radar gaps</label>
+      </div></details>
+      <label class="location-search"><span aria-hidden="true">⌕</span><input id="location-search" type="search" list="place-list" placeholder="Find a place" aria-label="Find a place"><datalist id="place-list"></datalist><button id="clear-location" type="button" aria-label="Clear place search">×</button></label>
+      <button id="panel-toggle" class="panel-toggle" type="button" aria-expanded="true">Hide details <span>↗</span></button>
+    </div>
+    <div class="view"><canvas id="map" width="760" height="760" aria-label="Storm reflectivity map"></canvas><div id="gl" hidden></div>
+      <div id="clock"></div><div class="map-coordinates" aria-hidden="true">SIMULATED GRID <span>·</span> 5 KM</div><div id="legend"></div>
+      <div class="map-scale" aria-hidden="true"><i></i> 60 KM</div>
+    </div>
+    <div class="map-footnote"><span><i class="key-radar"></i>Radar site</span><span><i class="key-strike">✳</i>Lightning strike</span><span class="map-footnote-right">SIMULATED DATA <b>·</b> FOR DEMONSTRATION</span></div>
+  </section>
+  <aside id="panel" aria-live="polite"></aside>
+</main>
+<footer class="timeline">
+  <button id="play" class="play-button" aria-label="Play timeline">▶</button>
+  <div class="timeline-body"><div class="timeline-labels"><span>PAST OBSERVATIONS</span><span>NOW</span><span>SHORT-RANGE FORECAST</span><span>EXTENDED OUTLOOK</span></div>
+    <div class="tl"><div class="zones"></div><input type="range" id="t" min="-6" max="18" value="0" aria-label="Forecast timeline"></div>
+    <div class="zl"><span>−60 min</span><span>−30 min</span><span>NOW</span><span>+60 min</span><span>+120 min</span><span>+180 min</span></div>
+  </div>
+  <output id="tl"></output>
+</footer>
+<dialog id="welcome" class="welcome-dialog" aria-labelledby="welcome-title">
+  <button id="welcome-close" class="welcome-close" type="button" aria-label="Close guide">×</button>
+  <p class="eyebrow">A QUICK FIELD GUIDE</p><h1 id="welcome-title">From first signal<br>to local action.</h1>
+  <p class="welcome-intro">TaditNetra brings the storm picture into one place. Follow the four steps to see how observations become a forecast and a message for review.</p>
+  <ol class="guide-steps"><li><i>01</i><span><b>Observe</b><small>Review radar, satellite and lightning feeds.</small></span></li><li><i>02</i><span><b>Fuse</b><small>See where radar reaches—and where estimates fill gaps.</small></span></li><li><i>03</i><span><b>Forecast</b><small>Track storm cells and their likely movement.</small></span></li><li><i>04</i><span><b>Respond</b><small>Review village alerts before approving a message.</small></span></li></ol>
+  <p class="demo-notice"><b>DEMO MODE</b> Maps, boundaries and weather data are illustrative simulations. They are not live warnings or official geography.</p>
+  <button id="welcome-start" class="run-button" type="button">Open storm desk <span>→</span></button>
+</dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
